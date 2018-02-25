@@ -1,4 +1,6 @@
 //import fs from "fs";
+let EventEmitter = require("events").EventEmitter;
+let util = require("util");
 let fs = require("fs");
 
 class FileService {
@@ -16,21 +18,22 @@ class FileService {
         }
     }
 
-    loadFileFromLoc(fileLoc, callback){
-        this.loadFileFromStream(fs.createReadStream(fileLoc), callback);
+    loadFileFromLoc(fileLoc){
+        return this.loadFileFromStream(fs.createReadStream(fileLoc));
     }
 
-    loadFileFromStream(fileStream, callback){
+    loadFileFromStream(fileStream){
         fileStream.setEncoding("UTF8");
         fileStream.on("data", (chunk)=>{
             this.fileContent += chunk.toLowerCase();
         });
         fileStream.on("end", ()=>{
-            callback(this.fileContent);
+            this.emit("loadedFile", this.fileContent);
         });
         fileStream.on("error", (error)=>{
             console.log(`loadFileFromStream failed,\nexception: ${error}`);
         });
+        return this;
     }
 
     writingFile(fileLoc, data){
@@ -38,13 +41,15 @@ class FileService {
         fileStream.write(data, "UTF8");
         fileStream.end();
         fileStream.on("finish", () => {
-            console.log(`Complete!\n${data}`);
+            this.emit("wroteFile", data);
         });
         fileStream.on("error", (error) => {
             console.log(`writingFile failed,\nexception: ${error}`);
         })
+        return this;
     }
 }
 
+util.inherits(FileService, EventEmitter);
 //export default FileService;
 module.exports = FileService;

@@ -1,1 +1,7 @@
-{"rule1":"There are 12 <img> tag without alt attribute. ","rule2":"There are 5 <a> tag without rel attribute. ","rule3i":"This HTML without <title> tag. ","rule3ii":"There are 1 <meta> tag with name attribute and value is keywords. ","rule3iii":"There are no <meta> tag with name attribute and value is descriptions. ","rule4":"This HTML have more than 5 <strong> tag. ","rule5":"This HTML have more than 1 <h1> tag. ","User-defined0":"There are 1 <meta> tag with name attribute and value is robots. "}
+There are 11 <img> tag without alt attribute. 
+There are 5 <a> tag without rel attribute. 
+There are 1 <meta> tag with name attribute and value is keywords. 
+There are no <meta> tag with name attribute and value is descriptions. 
+This HTML have more than 5 <strong> tag. 
+This HTML have more than 1 <h1> tag. 
+There are 1 <meta> tag with name attribute and value is robots. 

@@ -28,7 +28,7 @@ class ParseService {
         });
 
         this.option.addRules.map((rule, index)=>{
-            let addKey = `User-defined${index}`;
+            let addKey = `User-defined-rule${index}`;
             this.results[addKey] = this.parsingByRule(addKey, rule);
         });
 

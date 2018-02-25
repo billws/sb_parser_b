@@ -2,6 +2,8 @@
 let FileService = require("./services/fileService");
 let ParseService = require("./services/parseService");
 let ConvertService = require("./services/convertService");
+let EventEmitter = require("events").EventEmitter;
+let util = require("util");
 
 const configLocation = "./config.conf";
 
@@ -22,8 +24,19 @@ class Sb_parser_b {
         this.results = {};
     }
 
-    get getResult(){
-        this.loadingFile();
+    parsing(){
+        return this.loadingFile().on("parsedFile", this.parsedFile);
+    }
+
+    parsedFile(){
+        let results = "";
+        Object.keys(this.results).map((key)=>{
+            results += `${this.results[key]}\n`;
+        });
+        this.fileService.writingFile(this.outputLoc, results).on("wroteFile", ()=>{
+            this.emit("completedOutput", results);
+        });
+        return this;
     }
 
     init(configLoc){
@@ -35,20 +48,21 @@ class Sb_parser_b {
     loadingFile(){
         let fileContent = "";
         if(typeof this.fileLoc !== "undefined"){
-            this.fileService.loadFileFromLoc(this.fileLoc, this.loadedFile);
+            this.fileService.loadFileFromLoc(this.fileLoc).on("loadedFile", this.loadedFile);
         } else {
-            this.fileService.loadFileFromStream(this.fileStream, this.loadedFile);
+            this.fileService.loadFileFromStream(this.fileStream).on("loadedFile", this.loadedFile);
         }
+        return this;
     }
 
     loadedFile(data){
         let parseService = new ParseService(this.ruleOption, data);
         this.results = parseService.parsing();
-        this.fileService.writingFile(this.outputLoc, this.convertService.jsonToString(this.results));
-        //return this.results;
+        this.emit("parsedFile");
+        return this;
     }
 }
 
-
+util.inherits(Sb_parser_b, EventEmitter);
 //export default Sb_parser_b;
 module.exports = Sb_parser_b;
