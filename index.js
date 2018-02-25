@@ -5,7 +5,7 @@ let ConvertService = require("./services/convertService");
 let EventEmitter = require("events").EventEmitter;
 let util = require("util");
 
-const configLocation = "./config.conf";
+const configLocation = "config.conf";
 
 class Sb_parser_b {
     constructor(option) {
