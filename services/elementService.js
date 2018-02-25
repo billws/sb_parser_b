@@ -2,8 +2,8 @@ let TagParser = require('./elementParser/tagParser');
 let AttrParser = require('./elementParser/attrParser');
 
 const parsers = {
-    TagParser,
-    AttrParser
+    "Tag": TagParser,
+    "Attr": AttrParser
 };
 
 class ElementService {

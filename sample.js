@@ -10,8 +10,10 @@ let option = {
     //"fileStream": fs.createReadStream(htmlLoc),
     "outputLoc": outputLoc,
     "strongNumber": "5",
-    "disableRules": ["rule1", "rule99"],
-    "addRules":{}
+    "disableRules": ["rule99"],
+    "addRules":[
+        {"tag": "meta", "withAttr": "name", "attrValue": "robots", "block": "head", "detect": ""}
+    ]
 };
 
 let htmlParser = new Sb_parser(option);

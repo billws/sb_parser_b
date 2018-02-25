@@ -23,7 +23,7 @@ class FileService {
     loadFileFromStream(fileStream, callback){
         fileStream.setEncoding("UTF8");
         fileStream.on("data", (chunk)=>{
-            this.fileContent += chunk;
+            this.fileContent += chunk.toLowerCase();
         });
         fileStream.on("end", ()=>{
             callback(this.fileContent);

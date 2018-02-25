@@ -28,7 +28,7 @@ class Sb_parser_b {
 
     init(configLoc){
         let configService = new FileService();
-        let configContent = configService.loadFileSync(configLocation);
+        let configContent = configService.loadFileSync(configLocation.toLowerCase());
         return this.convertService.stringToJson(configContent);
     }
 
@@ -42,9 +42,10 @@ class Sb_parser_b {
     }
 
     loadedFile(data){
-        let parseService = new ParseService(this.ruleOption);
-        this.results = parseService.parsingString(data);
+        let parseService = new ParseService(this.ruleOption, data);
+        this.results = parseService.parsing();
         this.fileService.writingFile(this.outputLoc, this.convertService.jsonToString(this.results));
+        //return this.results;
     }
 }
 
